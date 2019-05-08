@@ -25,6 +25,7 @@ public class MancalaAI {
     public static void main(String[] args) {
         String fname = "move.txt";
         File dataOut = new File(fname);
+        printGameBoard();
         int move = firstLegalMove();
         try {
             FileWriter fw = new FileWriter(dataOut,false);
@@ -42,7 +43,7 @@ public class MancalaAI {
         int move = -1;
         File file = new File(gameboardFileName);
         int pitNumber = -1;
-        writeToConsole(gameboardFileName + "\n");
+        writeToConsole(file.getPath() + "\n");
         
         try {
             lineScan = new Scanner(file);
@@ -91,8 +92,26 @@ public class MancalaAI {
         return move;
     }
     
+    public static void printGameBoard() {
+        Scanner lineScan;
+        String fName = "gameboard.txt";
+        String line = "";
+        File file = new File(fName);
+        
+        try {
+            lineScan = new Scanner(file);
+            // Read through lines of file
+            while (lineScan.hasNextLine()){
+                line = lineScan.nextLine();
+                writeToConsole(line + " ");
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     public static void writeToConsole(String message) {
-        String consoleFileName = "console.txt";
+        String consoleFileName = System.getProperty("user.dir") + "/console.txt";
         File dataOut = new File(consoleFileName);
         try {
             FileWriter fw = new FileWriter(dataOut,true);
